@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "composite": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/database"
+    },
+    {
+      "path": "../../packages/gmail-adapter"
+    },
+    {
+      "path": "../../packages/oauth"
+    },
+    {
+      "path": "../../packages/security"
+    },
+    {
+      "path": "../../packages/observability"
+    },
+    {
+      "path": "../../packages/microsoft-adapter"
+    },
+    {
+      "path": "../../packages/zoho-adapter"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@yempik/zoho-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. tests/unit/zoho-adapter.query.test.ts tests/unit/zoho-adapter.normalize.test.ts tests/unit/zoho-adapter.drafts.test.ts"
+  },
+  "dependencies": {
+    "@yempik/core": "workspace:*"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "yempik-mail-gateway",
+  "version": "0.1.0",
+  "description": "Open-source MCP server that gives AI agents safe access to Gmail, Microsoft 365 and Zoho Mail: draft-first delivery, per-identity send limits, idempotent sends, audit and a kill switch.",
+  "license": "MIT",
+  "author": "Yempik Ltd",
+  "homepage": "https://www.yempik.com/mail-gateway",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yempik-ai/mail-gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yempik-ai/mail-gateway/issues"
+  },
+  "keywords": [
+    "MCP server",
+    "email for AI agents",
+    "Gmail MCP",
+    "Outlook MCP",
+    "Microsoft Graph",
+    "Zoho Mail",
+    "draft-first email",
+    "AI SDR",
+    "outbound automation",
+    "agent safety",
+    "Claude",
+    "ChatGPT connectors"
+  ],
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22 <23",
+    "pnpm": ">=11"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @yempik/mcp-server dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "pnpm -r lint && pnpm lint:tests",
+    "lint:tests": "eslint tests vitest.config.ts",
+    "typecheck": "pnpm -r typecheck && pnpm typecheck:tests",
+    "typecheck:tests": "tsc -p tsconfig.tests.json --pretty false",
+    "test": "pnpm -r test",
+    "db:migrate": "pnpm --filter @yempik/database migrate",
+    "db:seed": "pnpm --filter @yempik/database seed",
+    "smoke": "node --no-experimental-require-module scripts/boot-smoke.mjs",
+    "verify:deployment": "node scripts/verify-deployment.mjs"
+  },
+  "dependencies": {
+    "@yempik/mcp-server": "workspace:*"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@types/node": "^22.19.11",
+    "eslint": "^9.39.2",
+    "fastify": "^5.12.7",
+    "globals": "^16.5.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.1.12"
+  }
+}

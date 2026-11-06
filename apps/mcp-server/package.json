@@ -1,0 +1,37 @@
+{
+  "name": "@yempik/mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "NODE_OPTIONS=--max-http-header-size=65536 tsx watch src/index.ts",
+    "start": "NODE_OPTIONS=--max-http-header-size=65536 node dist/index.js",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. --passWithNoTests tests/unit/mcp-server.admin-auth.test.ts tests/unit/mcp-server.oauth-pkce.test.ts tests/unit/mcp-server.tools.test.ts tests/unit/mail-search.test.ts tests/unit/mail-body-shaping.test.ts tests/unit/draft-service.test.ts tests/unit/reply-matching.test.ts tests/security/admin-dashboard.security.test.ts tests/unit/signature-store.test.ts tests/unit/mcp-server.http.test.ts tests/unit/mcp-server.hardening.test.ts tests/security/http-hardening.security.test.ts tests/security/mcp-oauth-consent.security.test.ts tests/unit/verify-deployment.test.ts"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^8.0.2",
+    "@fastify/rate-limit": "^10.3.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@sentry/node": "^11.10.0",
+    "@yempik/core": "workspace:*",
+    "@yempik/database": "workspace:*",
+    "@yempik/gmail-adapter": "workspace:*",
+    "@yempik/microsoft-adapter": "workspace:*",
+    "@yempik/oauth": "workspace:*",
+    "@yempik/observability": "workspace:*",
+    "@yempik/security": "workspace:*",
+    "@yempik/zoho-adapter": "workspace:*",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "fastify": "^5.12.7",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}

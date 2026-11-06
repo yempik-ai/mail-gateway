@@ -1,0 +1,58 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "Yempik Mail Gateway",
+  "description": "An open-source MCP server that puts Gmail, Microsoft 365 and Zoho Mail behind one tool surface for AI agents, with draft-first delivery, per-identity daily send limits, idempotent sends, send reconciliation, audit and a kill switch.",
+  "codeRepository": "https://github.com/yempik-ai/mail-gateway",
+  "url": "https://www.yempik.com/mail-gateway",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "0.1.0",
+  "dateCreated": "2026-08-02",
+  "programmingLanguage": ["TypeScript"],
+  "runtimePlatform": "Node.js 22",
+  "applicationCategory": "Developer tools",
+  "keywords": [
+    "MCP server",
+    "email for AI agents",
+    "Gmail MCP",
+    "Outlook MCP",
+    "Microsoft Graph",
+    "Zoho Mail",
+    "draft-first email",
+    "AI SDR",
+    "outbound automation",
+    "agent safety",
+    "Claude",
+    "ChatGPT connectors"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Raffaele",
+      "familyName": "Zarrelli",
+      "url": "https://raffaelezarrelli.com",
+      "sameAs": "https://github.com/Sarracio",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Yempik",
+        "url": "https://www.yempik.com"
+      }
+    },
+    {
+      "@type": "Person",
+      "givenName": "Simone",
+      "familyName": "Bova",
+      "url": "https://www.linkedin.com/in/simone-bova/",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Yempik",
+        "url": "https://www.yempik.com"
+      }
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yempik",
+    "url": "https://www.yempik.com"
+  }
+}

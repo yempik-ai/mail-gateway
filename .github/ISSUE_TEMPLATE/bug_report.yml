@@ -1,0 +1,79 @@
+name: Bug report
+description: Report something that does not work as documented.
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for the report. Before you start:
+
+        - Do not include real email addresses, message content, tokens or secrets. Replace them with placeholders.
+        - Report security problems privately through the repository's **Security** tab, not here.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened
+      description: Describe the problem in a few sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: List the tool calls or requests, with redacted inputs.
+      placeholder: |
+        1. Call create_outreach_drafts with ...
+        2. Call send_draft with ...
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options:
+        - Gmail
+        - Microsoft 365
+        - Zoho Mail
+        - Not provider specific
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: MCP tool or endpoint
+      placeholder: send_draft
+  - type: input
+    id: error-code
+    attributes:
+      label: Error code
+      description: The `code` field of the error, if any.
+      placeholder: PROVIDER_TIMEOUT
+  - type: input
+    id: version
+    attributes:
+      label: Gateway version or commit
+      placeholder: 0.1.0 or a commit hash
+    validations:
+      required: true
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment
+      options:
+        - Vercel and Neon
+        - Docker
+        - Local development
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted logs or audit events
+      description: Include the correlation id. Remove tokens, addresses and message content.
+      render: text

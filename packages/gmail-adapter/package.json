@@ -1,0 +1,19 @@
+{
+  "name": "@yempik/gmail-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. tests/unit/gmail-adapter.query.test.ts tests/unit/gmail-adapter.normalize.test.ts tests/unit/gmail-adapter.mime.test.ts tests/unit/gmail-adapter.drafts.test.ts tests/unit/gmail-adapter.send-as.test.ts"
+  },
+  "dependencies": {
+    "@yempik/core": "workspace:*"
+  }
+}

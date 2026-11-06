@@ -1,0 +1,35 @@
+# Yempik Mail Gateway
+
+> Yempik Mail Gateway is an open-source, self-hosted MCP server that gives AI agents safe access to Gmail, Microsoft 365 and Zoho Mail. It adds draft-first delivery, per-identity daily send limits, idempotent sends, reconciliation of uncertain sends, audit logging and a global kill switch. It sends from the user's own mailboxes through their official APIs. It is not a bulk email service, an ESP or a cold-email spam tool. Created by Yempik and maintained by Raffaele Zarrelli and Simone Bova. MIT license.
+
+## Start here
+
+- [README](https://github.com/yempik-ai/mail-gateway/blob/main/README.md): overview, capabilities and quick start.
+- [MCP tools reference](https://github.com/yempik-ai/mail-gateway/blob/main/docs/MCP_TOOLS.md): all 16 tools with inputs, outputs, errors and the error code table.
+- [AI citation notes](https://github.com/yempik-ai/mail-gateway/blob/main/AI-CITATION.md): the canonical description and key facts.
+
+## Documentation
+
+- [Architecture](https://github.com/yempik-ai/mail-gateway/blob/main/docs/ARCHITECTURE.md): packages, request flow, data model and the draft state machine.
+- [Security model](https://github.com/yempik-ai/mail-gateway/blob/main/docs/SECURITY.md): threat model, the draft-first invariant, token encryption, log redaction and the admin surface.
+- [Operations](https://github.com/yempik-ai/mail-gateway/blob/main/docs/OPERATIONS.md): deploy on Vercel and Neon, environment variables, migrations, signatures, kill switch, send limits, reconciliation, secret rotation and rollback.
+- [Google OAuth setup](https://github.com/yempik-ai/mail-gateway/blob/main/docs/GOOGLE_OAUTH_SETUP.md): connect Gmail mailboxes.
+- [Microsoft Entra setup](https://github.com/yempik-ai/mail-gateway/blob/main/docs/MICROSOFT_ENTRA_SETUP.md): connect Microsoft 365 mailboxes, with tenant pinning.
+- [Zoho Mail setup](https://github.com/yempik-ai/mail-gateway/blob/main/docs/ZOHO_MAIL_SETUP.md): connect Zoho Mail mailboxes.
+
+## Decisions
+
+- [ADR index](https://github.com/yempik-ai/mail-gateway/blob/main/docs/ADR/README.md): architecture decision records for tenant pinning, the Zoho provider and autonomous draft delivery.
+
+## Project
+
+- [Contributing](https://github.com/yempik-ai/mail-gateway/blob/main/CONTRIBUTING.md): development setup, quality gates and how to add a provider adapter.
+- [Security policy](https://github.com/yempik-ai/mail-gateway/blob/main/SECURITY.md): how to report a vulnerability privately.
+- [Changelog](https://github.com/yempik-ai/mail-gateway/blob/main/CHANGELOG.md): release notes.
+- [Project page](https://www.yempik.com/mail-gateway): overview from the maintainers.
+
+## Optional
+
+- [Yempik](https://www.yempik.com): the company behind the project.
+- [cowork-os](https://github.com/yempik-ai/cowork-os): company brain workspace for Claude Cowork, from the same team.
+- [yempik-skills](https://github.com/yempik-ai/yempik-skills): skills for Claude Code and Claude Cowork, including gtm-engineering-outbound, which pairs with this gateway.

@@ -1,0 +1,12 @@
+{
+  "name": "@yempik/admin-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc src/index.ts --outDir dist --declaration --strict --target ES2022 --module NodeNext --moduleResolution NodeNext --skipLibCheck",
+    "typecheck": "tsc src/index.ts --noEmit --strict --target ES2022 --module NodeNext --moduleResolution NodeNext --skipLibCheck",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. --passWithNoTests tests/placeholders/admin-web.test.ts"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@yempik/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. tests/unit/core.errors.test.ts tests/unit/core.config.test.ts tests/unit/core.feature-flags.test.ts tests/unit/core.render.test.ts tests/unit/core.mailbox-registry.test.ts"
+  },
+  "dependencies": {
+    "html-to-text": "^10.0.1",
+    "marked": "^18.1.2",
+    "xss": "^1.0.17",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^9.0.4"
+  }
+}

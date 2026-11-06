@@ -1,0 +1,22 @@
+{
+  "name": "@yempik/oauth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. tests/unit/oauth.state.test.ts tests/unit/oauth.google.test.ts tests/unit/oauth.microsoft.test.ts tests/unit/oauth.zoho.test.ts tests/unit/oauth.scope-drift.test.ts"
+  },
+  "dependencies": {
+    "@yempik/core": "workspace:*",
+    "@yempik/database": "workspace:*",
+    "@yempik/security": "workspace:*",
+    "drizzle-orm": "^0.45.1"
+  }
+}
