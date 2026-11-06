@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    // Resolve workspace packages to their sources, as vitest.config.ts does, so
+    // the tests type-check against the code they run and need no prior build.
+    "paths": {
+      "@yempik/core": ["./packages/core/src/index.ts"],
+      "@yempik/database": ["./packages/database/src/index.ts"],
+      "@yempik/gmail-adapter": ["./packages/gmail-adapter/src/index.ts"],
+      "@yempik/microsoft-adapter": ["./packages/microsoft-adapter/src/index.ts"],
+      "@yempik/oauth": ["./packages/oauth/src/index.ts"],
+      "@yempik/observability": ["./packages/observability/src/index.ts"],
+      "@yempik/security": ["./packages/security/src/index.ts"],
+      "@yempik/zoho-adapter": ["./packages/zoho-adapter/src/index.ts"]
+    }
+  },
+  "include": ["tests/**/*.ts", "vitest.config.ts"]
+}

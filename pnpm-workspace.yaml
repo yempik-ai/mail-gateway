@@ -1,0 +1,16 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  esbuild: true
+# Workspace packages are symlinked, not injected. Injected copies are made at
+# install time, before `pnpm -r build`, so they carry no dist/: Vercel's
+# function bundle then resolved @yempik/mcp-server to a copy with no compiled
+# code (production outage on 2026-11-06). The Dockerfile uses
+# `pnpm deploy --legacy`, which does not need injection.
+injectWorkspacePackages: false
+onlyBuiltDependencies:
+  - esbuild
+overrides:
+  # CVE-2026-112942: vitest keeps vite 8.2.0 in the lockfile; force the patched 8.x line.
+  'vite@>=8.0.0 <8.3.3': ^8.3.3

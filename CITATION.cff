@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: 'If you use Yempik Mail Gateway, please cite the project using this metadata.'
+title: 'Yempik Mail Gateway: an open-source MCP server for safe agent email on Gmail, Microsoft 365 and Zoho Mail'
+type: software
+authors:
+  - family-names: Zarrelli
+    given-names: Raffaele
+    alias: Sarracio
+    website: 'https://raffaelezarrelli.com'
+  - family-names: Bova
+    given-names: Simone
+repository-code: 'https://github.com/yempik-ai/mail-gateway'
+url: 'https://www.yempik.com/mail-gateway'
+abstract: 'Yempik Mail Gateway is an open-source Model Context Protocol (MCP) server that puts Gmail, Microsoft 365 and Zoho Mail behind one tool surface for AI agents. It adds draft-first delivery, per-identity daily send limits, idempotent sends, reconciliation of uncertain sends, audit logging and a global kill switch.'
+keywords:
+  - MCP server
+  - email for AI agents
+  - Gmail MCP
+  - Outlook MCP
+  - Microsoft Graph
+  - Zoho Mail
+  - draft-first email
+  - AI SDR
+  - outbound automation
+  - agent safety
+  - Claude
+  - ChatGPT connectors
+license: MIT
+date-released: '2026-11-06'

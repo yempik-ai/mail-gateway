@@ -1,0 +1,31 @@
+{
+  "mailboxes": [
+    {
+      "id": "outreach-gmail",
+      "provider": "gmail",
+      "emailAddress": "outreach@example.com",
+      "displayName": "Example Outreach",
+      "routingPriority": 1,
+      "sendLimits": { "outreach@example.com": 10 }
+    },
+    {
+      "id": "sales-outlook",
+      "provider": "microsoft",
+      "emailAddress": "hello@example.com",
+      "aliases": ["sales@example.com"],
+      "displayName": "Example Sales",
+      "microsoftTenantId": "00000000-0000-0000-0000-000000000000",
+      "routingPriority": 2,
+      "perRunDraftLimit": 5,
+      "dailyDraftLimit": 25,
+      "sendLimits": { "hello@example.com": 10, "sales@example.com": 5 }
+    },
+    {
+      "id": "team-zoho",
+      "provider": "zoho",
+      "emailAddress": "team@example.com",
+      "routingPriority": 3,
+      "enabled": false
+    }
+  ]
+}

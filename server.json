@@ -1,0 +1,41 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.yempik-ai/mail-gateway",
+  "title": "Yempik Mail Gateway",
+  "description": "Self-hosted MCP server for Gmail, Microsoft 365 and Zoho Mail with draft-first delivery.",
+  "version": "0.1.0",
+  "websiteUrl": "https://www.yempik.com/mail-gateway",
+  "repository": {
+    "url": "https://github.com/yempik-ai/mail-gateway",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "{gateway_url}/mcp",
+      "variables": {
+        "gateway_url": {
+          "description": "Base URL of your own deployment, for example https://mail.example.com. There is no public endpoint: you host the gateway yourself.",
+          "isRequired": true,
+          "placeholder": "https://mail.example.com"
+        }
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "HTTP Basic credentials of an MCP client, as base64(MCP_CLIENT_ID:MCP_CLIENT_SECRET). Clients that support OAuth can use the OAuth flow instead.",
+          "value": "Basic {credentials}",
+          "isRequired": true,
+          "isSecret": true,
+          "variables": {
+            "credentials": {
+              "description": "base64 of MCP_CLIENT_ID:MCP_CLIENT_SECRET",
+              "isRequired": true,
+              "isSecret": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

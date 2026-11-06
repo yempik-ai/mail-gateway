@@ -1,0 +1,21 @@
+{
+  "name": "@yempik/observability",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint src",
+    "test": "vitest run --root ../.. tests/unit/observability.redaction.test.ts tests/security/log-redaction.security.test.ts"
+  },
+  "dependencies": {
+    "@yempik/core": "workspace:*",
+    "@yempik/database": "workspace:*",
+    "pino": "^10.3.1"
+  }
+}
