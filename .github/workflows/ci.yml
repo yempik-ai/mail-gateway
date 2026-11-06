@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
 
       # No version input: pnpm/action-setup reads `packageManager` from package.json.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v4
         with:
