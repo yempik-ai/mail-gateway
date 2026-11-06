@@ -14,7 +14,7 @@
     "test": "vitest run --root ../.. --passWithNoTests tests/unit/mcp-server.admin-auth.test.ts tests/unit/mcp-server.oauth-pkce.test.ts tests/unit/mcp-server.tools.test.ts tests/unit/mail-search.test.ts tests/unit/mail-body-shaping.test.ts tests/unit/draft-service.test.ts tests/unit/reply-matching.test.ts tests/security/admin-dashboard.security.test.ts tests/unit/signature-store.test.ts tests/unit/mcp-server.http.test.ts tests/unit/mcp-server.hardening.test.ts tests/security/http-hardening.security.test.ts tests/security/mcp-oauth-consent.security.test.ts tests/unit/verify-deployment.test.ts"
   },
   "dependencies": {
-    "@fastify/formbody": "^8.0.2",
+    "@fastify/formbody": "^9.0.1",
     "@fastify/rate-limit": "^10.3.0",
     "@modelcontextprotocol/sdk": "^1.32.1",
     "@sentry/node": "^11.10.0",
