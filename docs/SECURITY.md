@@ -11,7 +11,7 @@ The main risks and the controls against them are:
 | Risk                                                                    | Control                                                                                                              |
 | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | An agent sends arbitrary mail, or mail to recipients it was not given.  | Draft-first delivery. `send_draft` takes only a gateway draft id. See the next section.                              |
-| An agent reads, moves, forwards or deletes received mail.               | Those operations are not implemented. Security tests scan the source for the provider calls that would perform them. |
+| An agent moves, archives, forwards or deletes received mail.            | Those operations are not implemented. Security tests scan the source for the provider calls that would perform them. |
 | A retry or timeout sends the same message twice.                        | Atomic claim, persistent send state, and a ban on automatic retry after an ambiguous outcome.                        |
 | A prompt-injected or runaway agent floods recipients.                   | Per-mailbox and per-identity daily send limits, per-run draft limits, client rate limiting and a global kill switch. |
 | A database leak exposes mailbox access.                                 | Refresh tokens are stored as AES-256-GCM ciphertext. Keys live outside the database.                                 |
@@ -37,6 +37,11 @@ The gateway can deliver mail, but only through `send_draft`, and only from a pro
 already registered under an internal gateway id. The tool accepts no recipients, subject, body or
 provider id. It cannot be used to send an arbitrary message or to send a received message.
 
+This invariant does not require a person to approve the draft. With `SEND_EMAILS=true` (the
+version 0.1.0 default), an agent can create a draft and then send it. To require a person to review
+and send each message, set `SEND_EMAILS=false` and send from the provider's mail client. The
+sending tool does not inspect commercial claims, promises or other message content.
+
 The database claims the draft with a `created|updated → sending` transition. It consumes both the
 mailbox aggregate quota and the quota for the selected primary or alias identity before any
 provider call. Success sets the status to `sent`. A second call returns the same record and makes
@@ -44,7 +49,10 @@ no provider call.
 
 A timeout or network failure after the provider call may hide a successful send. In that case the
 record becomes `send_unknown` and automatic retry is forbidden. An operator or agent resolves the
-state with `reconcile_draft_send`, which checks the Drafts and Sent folders. See
+state with `reconcile_draft_send`, which checks the Drafts and Sent folders. If evidence is
+insufficient, it returns `unresolved` and leaves the record blocked. A `sent` status means the
+provider accepted the message, not that it reached the recipient's inbox. These controls apply to
+the same managed draft; they do not stop a separate draft from contacting the same recipient. See
 [ARCHITECTURE.md](ARCHITECTURE.md#draft-state-machine) for the state machine.
 
 ### Provider boundaries
