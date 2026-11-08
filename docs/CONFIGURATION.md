@@ -175,13 +175,15 @@ gateway sets to the **sum** of the identity limits. A send needs room under both
 - Counters are per UTC calendar day.
 - `0` blocks sending from that identity. Reading and drafting still work.
 
-**Warm-up.** New domains and mailboxes that send at full volume on day one look like spam to the
-receiving providers. Every identity without an explicit limit therefore starts at **10 sends per
-day**. A reasonable plan:
+**Initial limit.** Every sending identity without an explicit limit starts at **10 sends per day**.
+This is a conservative project default, not an official provider threshold or a guarantee of inbox
+placement. It also applies when the domain is not new. An alias has its own allowance; the mailbox
+aggregate is the sum of all its identity limits.
 
-1. Start at 10 per day per identity.
-2. Raise by about 10 per week while bounces and spam complaints stay low.
-3. Stop around 40-50 per day per identity for cold outreach, and keep reply traffic in mind.
+Before increasing limits, check the domain's authentication, the provider's sending requirements
+and the results of actual sends, including bounces and spam complaints. There is no universal
+increase schedule or daily volume that guarantees delivery. For Gmail, consult Google's
+[email sender guidelines](https://support.google.com/mail/answer/81126?hl=en).
 
 Raise limits in the dashboard (**Edit** → **Sends per day, per identity**) or in the registry file
 followed by `pnpm db:seed`. If you use both, update the file too, otherwise the next seed puts the

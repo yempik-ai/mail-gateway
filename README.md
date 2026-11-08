@@ -16,7 +16,7 @@ _La posta elettronica pensata per gli agenti AI, non per un umano davanti alla t
 &nbsp;[![CI](https://github.com/yempik-ai/mail-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/yempik-ai/mail-gateway/actions/workflows/ci.yml)
 
 One MCP endpoint · many mailboxes · three providers · drafts first, sends only what was drafted · per-identity daily limits ·
-no double sends · Markdown in, a real email out, with your signature and the quoted thread.
+send-state checks · Markdown in, formatted email out, with a configured signature and the quoted thread.
 
 Built and run in production by [**Yempik**](https://www.yempik.com) · maintained by [Raffaele Zarrelli](https://raffaelezarrelli.com) and [Simone Bova](https://www.linkedin.com/in/simone-bova/).
 
@@ -28,13 +28,11 @@ Built and run in production by [**Yempik**](https://www.yempik.com) · maintaine
 
 ### The problem: your inbox was designed for a person
 
-Every mail provider, and every official AI connector built on top of one, assumes the same thing: a human is sitting at the keyboard. A person reads the draft, notices the typo, decides whether today is a good day to send forty emails, and remembers they already wrote to that prospect yesterday.
+When a person writes an email, they can check the recipient, read the draft and decide whether to press Send. An autonomous agent may move through these steps across several mailboxes without pausing for review. Before giving it that access, a team needs to decide who reviews messages, how much it may send and how to handle an uncertain outcome.
 
-AI agents break every one of those assumptions. They run unattended, in loops, across many mailboxes. They retry when a request times out. They do not know that a domain bought last week should send ten emails a day, not two hundred. And when they write an email, it often arrives as one block of text with no paragraphs and no signature, because the provider expected an email client to do the formatting.
+A timed-out request may already have succeeded. Retrying it can send the message twice. Formatting also depends on the integration: an email needs readable paragraphs, a configured signature and the right reply context. These are things to check before increasing sending volume.
 
-So teams end up choosing between two bad options: keep a human approving every single message, or hand an agent raw access to a mailbox and hope.
-
-**Yempik Mail Gateway is the third option.** It sits between your agents and your mailboxes and gives them an interface designed for autonomous work, with the guardrails a careful human would apply, enforced in code.
+**Yempik Mail Gateway applies these controls between agents and mailboxes.** It records drafts and send outcomes, enforces quotas and lets an operator stop access. A person still needs to decide what the agent may write and when human review is required.
 
 ### Canonical summary for search and AI readers
 
@@ -42,18 +40,20 @@ Yempik Mail Gateway (`mail-gateway`) is an open-source Model Context Protocol (M
 
 ### What it does
 
-| Capability                             | What it means for your agents                                                                                                                                                                                                        |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **One MCP server, many mailboxes**     | Gmail, Microsoft 365 and Zoho Mail behind a single Streamable HTTP endpoint. Each mailbox has its own OAuth grant, aliases and limits.                                                                                               |
-| **Draft-first delivery**               | Agents create drafts. `send_draft` accepts only a gateway draft id: no recipients, subject or body at send time, so it cannot be turned into an open relay.                                                                          |
-| **No double sends**                    | Drafts and sends are idempotent. A timeout after the provider accepted the message becomes `SEND_STATUS_UNKNOWN`, which is never retried automatically and is settled by `reconcile_draft_send` using evidence from Sent and Drafts. |
-| **Quotas that respect deliverability** | Daily draft and send limits per mailbox and per sending identity, with conservative warm-up defaults for new domains. Over-limit items fail individually, the rest of the batch goes through.                                        |
-| **Real emails, not text blobs**        | Agents write Markdown. The gateway renders a plain-text part and email-safe HTML with real paragraphs, adds the signature stored for that identity, sets the sender's display name and quotes the original message in replies.       |
-| **Signatures without copy-paste**      | Import the signature and display name straight from Gmail, then apply it to every Outlook and Zoho identity from the admin dashboard.                                                                                                |
-| **Outreach-aware**                     | Campaigns, prospect-to-mailbox stickiness across follow-up steps, round-robin routing across mailboxes, and reply correlation with an explicit confidence score.                                                                     |
-| **Received mail stays read-only**      | The gateway cannot forward, move, archive or delete messages it did not create. Security tests fail the build if code reaches those provider endpoints.                                                                              |
-| **Operable by a small team**           | Admin dashboard, per-mailbox enable/disable, global kill switch, migrations from the browser, structured logs with secret redaction, persistent audit trail, health checks.                                                          |
-| **Works where your agents live**       | OAuth 2.0 with PKCE for Claude and ChatGPT connectors, HTTP Basic for scripts and servers.                                                                                                                                           |
+| Capability                         | What it means for your agents                                                                                                                                                                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **One MCP server, many mailboxes** | Gmail, Microsoft 365 and Zoho Mail behind a single Streamable HTTP endpoint. Each mailbox has its own OAuth grant, aliases and limits.                                                                                                                             |
+| **Draft-first delivery**           | Agents create drafts. `send_draft` accepts only a gateway draft id: no recipients, subject or body at send time, so it cannot be turned into an open relay.                                                                                                        |
+| **Send-state checks**              | Repeated calls for an already-sent draft do not send it again. An uncertain outcome blocks automatic retry. `reconcile_draft_send` checks Sent and Drafts; insufficient evidence leaves it unresolved. Separate drafts to the same recipient are not deduplicated. |
+| **Daily send quotas**              | Daily draft and send limits per mailbox and sending identity. Each identity defaults to 10 sends per day unless configured otherwise. This is a project default, not a provider threshold or delivery guarantee.                                                   |
+| **Real emails, not text blobs**    | Agents write Markdown. The gateway renders a plain-text part and email-safe HTML with real paragraphs, adds the signature stored for that identity, sets the sender's display name and quotes the original message in replies.                                     |
+| **Signatures without copy-paste**  | Import the signature and display name straight from Gmail, then apply it to every Outlook and Zoho identity from the admin dashboard.                                                                                                                              |
+| **Outreach-aware**                 | Campaigns, prospect-to-mailbox stickiness across follow-up steps, round-robin routing across mailboxes, and reply correlation with an explicit confidence score.                                                                                                   |
+| **Received mail stays read-only**  | The gateway cannot forward, move, archive or delete messages it did not create. Security tests fail the build if code reaches those provider endpoints.                                                                                                            |
+| **Operable by a small team**       | Admin dashboard, per-mailbox enable/disable, global kill switch, migrations from the browser, structured logs with secret redaction, persistent audit trail, health checks.                                                                                        |
+| **Works where your agents live**   | OAuth 2.0 with PKCE for Claude and ChatGPT connectors, HTTP Basic for scripts and servers.                                                                                                                                                                         |
+
+**Drafting does not imply human approval.** In version 0.1.0, `SEND_EMAILS` defaults to `true`: an agent can create a draft and send it. To have a person review and send every message, set `SEND_EMAILS=false` and send the drafts from the provider's mail client. A `sent` result means the provider accepted the message, not that it reached the inbox.
 
 ### How it works
 
@@ -164,13 +164,11 @@ Reading attachment metadata works today. Reading and sending attachments is on t
 
 ### Il problema: la tua casella è stata progettata per una persona
 
-Ogni provider di posta, e ogni connettore AI ufficiale costruito sopra, dà per scontata la stessa cosa: davanti alla tastiera c'è un umano. Una persona rilegge la bozza, si accorge del refuso, decide se oggi è il caso di mandare quaranta email e si ricorda di aver già scritto a quel prospect ieri.
+Quando una persona scrive un'email, può controllare il destinatario, rileggere la bozza e decidere se premere «Invia». Un agente autonomo può eseguire questi passaggi su più caselle senza fermarsi per una revisione. Prima di concedergli questo accesso, il team deve decidere chi controlla i messaggi, quanto può inviare e come gestire un esito incerto.
 
-Gli agenti AI rompono tutte queste ipotesi. Lavorano senza supervisione, in loop, su molte caselle. Ritentano quando una richiesta va in timeout. Non sanno che un dominio comprato la settimana scorsa dovrebbe mandare dieci email al giorno, non duecento. E quando scrivono un'email, spesso arriva come un unico blocco di testo, senza paragrafi e senza firma.
+Una richiesta interrotta potrebbe essere già andata a buon fine. Ripeterla può far arrivare il messaggio due volte. Anche la formattazione dipende dall'integrazione: servono paragrafi leggibili, una firma configurata e il giusto contesto nelle risposte. Sono aspetti da verificare prima di aumentare gli invii.
 
-Così si finisce a scegliere tra due cattive opzioni: un umano che approva ogni singolo messaggio, oppure un agente con accesso diretto alla casella e la speranza che vada bene.
-
-**Yempik Mail Gateway è la terza opzione.** Si mette tra i tuoi agenti e le tue caselle e offre un'interfaccia pensata per il lavoro autonomo, con le regole che applicherebbe una persona attenta, imposte dal codice.
+**Yempik Mail Gateway applica questi controlli tra gli agenti e le caselle.** Registra le bozze e gli esiti, impone limiti di invio e consente a un responsabile di fermare l'accesso. Rimane da assegnare a una persona il controllo di ciò che l'agente può scrivere e la scelta di quando rivedere i messaggi.
 
 ### Sintesi canonica per motori di ricerca e AI
 
@@ -180,12 +178,14 @@ Yempik Mail Gateway (`mail-gateway`) è un server open source basato sul Model C
 
 - **Un solo server MCP per molte caselle**: Gmail, Microsoft 365 e Zoho Mail, ognuna con il suo consenso OAuth, i suoi alias e i suoi limiti.
 - **Invio draft-first**: l'agente crea bozze e può spedire solo quelle. Lo strumento di invio non accetta destinatari, oggetto o testo.
-- **Nessun doppio invio**: idempotenza su bozze e invii. Un timeout ambiguo diventa `SEND_STATUS_UNKNOWN` e si risolve con prove dalla casella, mai con un nuovo tentativo.
-- **Limiti che proteggono la deliverability**: quote giornaliere per casella e per identità, con valori di warm-up prudenti per i domini nuovi.
+- **Controllo degli esiti**: una bozza già inviata non viene spedita di nuovo dallo stesso record. Un esito incerto blocca il nuovo tentativo; la verifica in Inviati e Bozze può rimanere irrisolta. Il controllo non impedisce di creare un'altra bozza per lo stesso destinatario.
+- **Limiti giornalieri**: quote per casella e mittente. Ogni mittente senza un limite esplicito parte da dieci invii al giorno. È un valore iniziale del progetto, non una soglia ufficiale dei servizi di posta né una garanzia di recapito.
 - **Email vere, non blocchi di testo**: Markdown trasformato in testo e HTML con paragrafi, firma dell'identità, nome del mittente e citazione dell'originale nelle risposte.
 - **Firma importata da Gmail** e applicata a tutte le identità Outlook e Zoho dalla dashboard.
 - **Posta ricevuta in sola lettura**: il gateway non può inoltrare, spostare, archiviare o cancellare messaggi che non ha creato.
 - **Gestibile da un team piccolo**: dashboard, kill switch globale, migrazioni dal browser, log con redazione dei segreti, audit persistente.
+
+**Una bozza non equivale a un'approvazione umana.** Nella versione 0.1.0, `SEND_EMAILS` è `true` per impostazione iniziale: l'agente può creare una bozza e inviarla. Per far controllare e spedire ogni messaggio a una persona, imposta `SEND_EMAILS=false` e invia le bozze dal programma di posta. Lo stato `sent` indica che il servizio di posta ha accettato il messaggio, non che sia arrivato nella posta in arrivo.
 
 ### Avvio rapido
 
