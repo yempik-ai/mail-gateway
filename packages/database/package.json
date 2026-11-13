@@ -19,7 +19,7 @@
   "dependencies": {
     "@yempik/core": "workspace:*",
     "@yempik/security": "workspace:*",
-    "dotenv": "^17.2.3",
+    "dotenv": "^18.0.10",
     "drizzle-orm": "^0.45.1",
     "pg": "^8.16.3"
   },
