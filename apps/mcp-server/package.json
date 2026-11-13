@@ -16,8 +16,8 @@
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/rate-limit": "^10.3.0",
-    "@modelcontextprotocol/sdk": "^1.32.1",
-    "@sentry/node": "^11.10.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@sentry/node": "^11.12.0",
     "@yempik/core": "workspace:*",
     "@yempik/database": "workspace:*",
     "@yempik/gmail-adapter": "workspace:*",
@@ -27,11 +27,11 @@
     "@yempik/security": "workspace:*",
     "@yempik/zoho-adapter": "workspace:*",
     "dotenv": "^17.2.3",
-    "drizzle-orm": "^0.45.1",
-    "fastify": "^5.12.7",
+    "drizzle-orm": "^0.45.4",
+    "fastify": "^5.12.8",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "tsx": "^4.21.0"
+    "tsx": "^4.23.15"
   }
 }
