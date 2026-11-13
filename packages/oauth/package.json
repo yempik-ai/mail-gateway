@@ -17,6 +17,6 @@
     "@yempik/core": "workspace:*",
     "@yempik/database": "workspace:*",
     "@yempik/security": "workspace:*",
-    "drizzle-orm": "^0.45.1"
+    "drizzle-orm": "^0.45.4"
   }
 }

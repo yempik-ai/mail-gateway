@@ -16,6 +16,6 @@
   "dependencies": {
     "@yempik/core": "workspace:*",
     "@yempik/database": "workspace:*",
-    "pino": "^10.3.1"
+    "pino": "^10.4.0"
   }
 }
