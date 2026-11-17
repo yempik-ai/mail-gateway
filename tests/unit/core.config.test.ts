@@ -25,6 +25,7 @@ describe('configuration validation', () => {
     expect(config.MCP_OAUTH_REDIRECT_ALLOWLIST).toEqual([
       'https://claude.ai/api/mcp/auth_callback',
       'https://chatgpt.com/connector_platform_oauth_redirect',
+      'https://grok.com/connectors-oauth-exchange-code/',
     ]);
   });
 

@@ -7,6 +7,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+### Fixed
+
+- Grok can connect as a remote MCP client: its OAuth callback
+  `https://grok.com/connectors-oauth-exchange-code/` is on the default
+  `MCP_OAUTH_REDIRECT_ALLOWLIST`.
+
+### Changed
+
+- A rejected dynamic client registration records the offered redirect URIs in the
+  `mcp_oauth_register` audit event.
+
 ## [0.1.0] - 2026-11-06
 
 First public release. The gateway has run in production at Yempik before this release.
