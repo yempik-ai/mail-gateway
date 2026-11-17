@@ -117,10 +117,12 @@ returns to. **Approve** issues a one-time code and redirects to the client. **De
 client with `error=access_denied`. Authorization codes and refresh tokens can be used once. A
 refresh returns a new access token and a new refresh token.
 
-The default allowed redirect URIs are `https://claude.ai/api/mcp/auth_callback` and
-`https://chatgpt.com/connector_platform_oauth_redirect`. Per-connector ChatGPT callbacks
+The default allowed redirect URIs are `https://claude.ai/api/mcp/auth_callback`,
+`https://chatgpt.com/connector_platform_oauth_redirect` and
+`https://grok.com/connectors-oauth-exchange-code/`. Per-connector ChatGPT callbacks
 (`https://chatgpt.com/connector/oauth/{callback_id}`) are accepted without listing them. Add more
-with `MCP_OAUTH_REDIRECT_ALLOWLIST`.
+with `MCP_OAUTH_REDIRECT_ALLOWLIST`. A rejected registration writes the offered redirect URIs to the
+`mcp_oauth_register` audit event.
 
 In ChatGPT, set the connector URL to `https://mail.example.com/mcp` and Authentication to OAuth.
 In both Claude and ChatGPT, the browser opens the consent page: sign in with the admin password and

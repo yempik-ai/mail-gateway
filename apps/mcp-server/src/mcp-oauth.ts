@@ -253,7 +253,12 @@ export function registerMcpOAuthRoutes(
           correlationId,
           operation: 'mcp_oauth_register',
           result: 'denied',
-          metadata: { reason: 'redirect_uris_not_allowlisted' },
+          // Redirect URIs are public client metadata; recording them makes a
+          // rejected connector diagnosable from the audit log alone.
+          metadata: {
+            reason: 'redirect_uris_not_allowlisted',
+            redirectUris: redirectUris.slice(0, 5),
+          },
         });
         return reply.code(400).send({
           error: 'invalid_redirect_uri',

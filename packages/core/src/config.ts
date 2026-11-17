@@ -100,6 +100,7 @@ export const gatewayConfigSchema = z.object({
       [
         'https://claude.ai/api/mcp/auth_callback',
         'https://chatgpt.com/connector_platform_oauth_redirect',
+        'https://grok.com/connectors-oauth-exchange-code/',
       ].join(','),
     )
     .transform((value) =>
